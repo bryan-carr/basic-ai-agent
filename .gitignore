@@ -1,3 +1,7 @@
 venv/
 .env
 
+*/run_python_file.py
+functions/__pycache__/run_python_file.cpython-310.pyc
+
+
