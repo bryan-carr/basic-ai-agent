@@ -1,7 +1,7 @@
 #New function -- Read a file in, as a string
 
 import os
-#from config import MAXCHARS
+from google.genai import types
 MAXCHARS = 10000
 
 def get_file_content(working_directory, file_path):
@@ -31,3 +31,19 @@ def get_file_content(working_directory, file_path):
         return file_content_string
     except Exception as e:
         return f"Error reading file: {e}"
+    
+
+#Function Schema -- makes this function useable by the Gemini agent
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_file_content",
+    description="Retrieves the contents of a file, as a string. Files are constrained to be within the working directory, or a subdirectory thereof.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "file_path": types.Schema(
+                type=types.Type.STRING,
+                description="The file path of the desired file, relative to the working directory.",
+            ),
+        },
+    ),
+)

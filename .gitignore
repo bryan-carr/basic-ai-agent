@@ -1,4 +1,5 @@
 venv/
+.venv/
 .env
 
 */run_python_file.py

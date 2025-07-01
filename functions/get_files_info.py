@@ -1,10 +1,13 @@
 # funtions/tools for the coding agent to use
 
 import os
+from google.genai import types
 
 #New function -- get basic size and location info of files in a directory
 def get_files_info(working_directory, directory=None):
-    #if the directory is outside the working directory, return an error string
+    #handle the None case -- use the current directory
+    if directory == None or directory == "":
+        directory = "."
 
     #convert the working directory into an absolute path -- should be more reliable
 
@@ -51,3 +54,17 @@ def get_files_info(working_directory, directory=None):
     except Exception as e:
         return f"Error: {str(e)}"
 
+#Function - Get_Files_Info - makes this function useable by our Gemini agent
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
+            ),
+        },
+    ),
+)
